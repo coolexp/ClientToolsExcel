@@ -142,6 +142,9 @@ public class FreeMarkerHelper {
 			return;
 		}
 		String methodStr = ovo.methodStr;
+		if(methodStr==null){
+			System.out.println(className+ "表名不存在methodStr");
+		}
 		String [] stringArr= methodStr.split(",");
 		String functionName = "";
 		ArrayList<ErayFunctionNameBean> fieldList = new ArrayList<ErayFunctionNameBean>();
