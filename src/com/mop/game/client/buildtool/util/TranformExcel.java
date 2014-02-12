@@ -33,6 +33,7 @@ import org.jdom.output.XMLOutputter;
 import com.coolexp.vo.ErayExcelManagerBean;
 import com.coolexp.vo.InputArgsVO;
 import com.coolexp.vo.ObjKeyVO;
+import com.mop.game.client.buildtool.config.BuildConfig;
 
 import flex.messaging.io.SerializationContext;
 import flex.messaging.io.amf.Amf3Output;
@@ -52,30 +53,23 @@ import flex.messaging.io.amf.Amf3Output;
  */
 public class TranformExcel {
 
-	Element root;
-	Document doc;
-	String outputfile = "ErayClientData.xml";
-	String outputDatafile = "ErayClientData.dat";
-	String outputDatafileAmf = "ErayClientData.amf";
-	String outputXMLFile = "ErayClassObj.xml";
-	String keySheetsName = "SheetsName";
-	String[] rootNames = { "root", "data" };
-	String[] classNodNames = { "root", "cl" };
-	Set<String> whiteSet = new HashSet<String>();
-	Set<String> whiteSetOld = new HashSet<String>();
-	Boolean outPutData = true;
-	Boolean outPutAS = false;
-	Boolean outPutJava = false;
-	Boolean outPutCDD = false;
-	String basePath="";
-	String defaultPackageString;
-	Element classRoot;
-	Document classDoc;
-	ArrayList<String> allClassList = new ArrayList<String>();
-	Map<String, Object> mainMap = new HashMap<String, Object>();
-	ArrayList<ErayExcelManagerBean> fieldFacList = new ArrayList<ErayExcelManagerBean>();
+	private Element root;
+	private Document doc;
+	private String keySheetsName = "SheetsName";
+	private String[] rootNames = { "root", "data" };
+	private String[] classNodNames = { "root", "cl" };
+	private Set<String> whiteSet = new HashSet<String>();
+	private  Set<String> whiteSetOld = new HashSet<String>();
+	private  Boolean outPutData = true;
+	private  Boolean outPutAS = false;
+	private  Boolean outPutJava = false;
+	private  Boolean outPutCDD = false;
+	private  Element classRoot;
+	private  Document classDoc;
+	private  ArrayList<String> allClassList = new ArrayList<String>();
+	private  Map<String, Object> mainMap = new HashMap<String, Object>();
+	private  ArrayList<ErayExcelManagerBean> fieldFacList = new ArrayList<ErayExcelManagerBean>();
 	private InputArgsVO iao;
-	private boolean outSheestDat;
 	public void setInputArgsVO(InputArgsVO _iao){
 		iao = _iao;
 	}
@@ -106,11 +100,11 @@ public class TranformExcel {
 			}
 		}
 
-		FreeMarkerHelper.createVOFactory(basePath, allClassList, outPutCDD);
+		FreeMarkerHelper.createVOFactory(BuildConfig.getInstance().getBasePath(), allClassList, outPutCDD);
 		/**输出数据XML节点文件**/
 		XMLOutputter xmlout = new XMLOutputter();
 		try {
-			xmlout.output(doc, new FileOutputStream(outputfile));
+			xmlout.output(doc, new FileOutputStream(BuildConfig.getInstance().getOutPutFile()));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -120,22 +114,17 @@ public class TranformExcel {
 		/**输出ClassXML节点文件**/
 		XMLOutputter classXMLout = new XMLOutputter();
 		try{
-			classXMLout.output(classDoc, new FileOutputStream(outputXMLFile));
+			classXMLout.output(classDoc, new FileOutputStream(BuildConfig.getInstance().getOutputXMLFile()));
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		createData(outputDatafile,mainMap);
+		createData(BuildConfig.getInstance().getOutputDatafile(),mainMap);
 	}
-	public void setOutputFilePath(String path,String defaultPackageStr,boolean isOutPutSheesDat){
-		outputfile = path +outputfile;
-		outputDatafile = path +outputDatafile;
-		outputDatafileAmf = path +outputDatafileAmf;
-		outputXMLFile = path+outputXMLFile;
-		basePath = path;
-		defaultPackageString = defaultPackageStr;
-		outSheestDat = isOutPutSheesDat;
+	public void setOutputFilePath(String path,String defaultPackageStr){
+		BuildConfig.disposeInstance();
+		BuildConfig.getInstance().initOutPutInfo(path,defaultPackageStr);
 	}
 	private static void createData(String path,Map<String, Object> subMap) throws IOException{
 		
@@ -280,9 +269,9 @@ public class TranformExcel {
 			FreeMarkerHelper.createExcelHelper(managerClassName,iao.isOutPutExcelHelper, data, iao.outPrePath,ovo);
 		}
 		//生成类文件
-		FreeMarkerHelper.createClassVO(className, outPutAS, outPutJava, data,basePath,defaultPackageString,outPutCDD);
+		FreeMarkerHelper.createClassVO(className, outPutAS, outPutJava, data,BuildConfig.getInstance().getBasePath(),BuildConfig.getInstance().getPackageString(),outPutCDD);
 		Element classSubroot = new Element(this.classNodNames[1]);
-		classSubroot.setAttribute("val",defaultPackageString+"."+className);
+		classSubroot.setAttribute("val",BuildConfig.getInstance().getPackageString()+"."+className);
 		classRoot.addContent(classSubroot);
 		if(!outPutData){
 			return;
@@ -342,10 +331,10 @@ public class TranformExcel {
 		mainMap.put(className+"_field", fieldMap);
 		root.addContent(subroot);
 		mainMap.put(className, subMap);
-		if(outSheestDat){
+		if(iao.isOutPutSheetsDat){
 			Map<String, Object> mMap = new HashMap<String, Object>();
 			mMap.put(className, subMap);
-			createData(basePath+className+".dat",mMap);
+			createData(BuildConfig.getInstance().getBasePath()+className+".dat",mMap);
 		}
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })

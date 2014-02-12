@@ -40,13 +40,12 @@ public class FreeMarkerHelper {
 	}
 	private static void createVOFactoryFile(String basePath,ArrayList<ErayClassNameBean> fieldList)throws IOException{
 		try{
-			BuildConfig cc = new BuildConfig();
 			Configuration freemarkerCfg = FreemarkerConfiguration.getConfiguation();
 			freemarkerCfg.setDirectoryForTemplateLoading(new File("./"));
 			freemarkerCfg.setEncoding(Locale.getDefault(), "gb2312");
 			Template template;
 			try{
-				template = freemarkerCfg.getTemplate(cc.getFacTemplatePath(),Locale.ENGLISH);
+				template = freemarkerCfg.getTemplate(BuildConfig.getInstance().getFacTemplatePath(),Locale.ENGLISH);
 				template.setEncoding("UTF-8");
 				HashMap<Object, Object> root = new HashMap<Object, Object>();
 				root.put("FieldList", fieldList);
@@ -75,12 +74,11 @@ public class FreeMarkerHelper {
 	}
 	public static void createExcelManagerFactory(String outPutBasePath,ArrayList<ErayExcelManagerBean> fieldFacList) throws IOException{
 		try{
-			BuildConfig cc = new BuildConfig();
 			Configuration freemarkerCfg = FreemarkerConfiguration.getConfiguation();
 			freemarkerCfg.setDirectoryForTemplateLoading(new File("./"));
 			freemarkerCfg.setEncoding(Locale.getDefault(), "gb2312");
 			Template template;
-			template = freemarkerCfg.getTemplate(cc.getExcelSheetHelperPath(),Locale.ENGLISH);
+			template = freemarkerCfg.getTemplate(BuildConfig.getInstance().getExcelSheetHelperPath(),Locale.ENGLISH);
 			template.setEncoding("UTF-8");
 			HashMap<Object, Object> root = new HashMap<Object, Object>();
 			root.put("FieldList", fieldFacList);
@@ -106,12 +104,11 @@ public class FreeMarkerHelper {
 	}
 	public static void createExcelManagerStringFactory(String outPutBasePath,ArrayList<ErayExcelManagerBean> fieldFacList) throws IOException{
 		try{
-			BuildConfig cc = new BuildConfig();
 			Configuration freemarkerCfg = FreemarkerConfiguration.getConfiguation();
 			freemarkerCfg.setDirectoryForTemplateLoading(new File("./"));
 			freemarkerCfg.setEncoding(Locale.getDefault(), "gb2312");
 			Template template;
-			template = freemarkerCfg.getTemplate(cc.getExcelStringHelperPath(),Locale.ENGLISH);
+			template = freemarkerCfg.getTemplate(BuildConfig.getInstance().getExcelStringHelperPath(),Locale.ENGLISH);
 			template.setEncoding("UTF-8");
 			HashMap<Object, Object> root = new HashMap<Object, Object>();
 			root.put("FieldList", fieldFacList);
@@ -241,13 +238,12 @@ public class FreeMarkerHelper {
 	}
 	private static void  createASVOTemplate(String ClassName,ArrayList<ErayBean> fieldList,String basePath,String defaultPackageString) throws IOException{
 		try{
-			BuildConfig cc = new BuildConfig();
 			Configuration freemarkerCfg = FreemarkerConfiguration.getConfiguation();
 			freemarkerCfg.setDirectoryForTemplateLoading(new File("./"));
 			freemarkerCfg.setEncoding(Locale.getDefault(), "gb2312");
 			Template template;
 			try{
-				template = freemarkerCfg.getTemplate(cc.getASTemplatePath(),Locale.ENGLISH);
+				template = freemarkerCfg.getTemplate(BuildConfig.getInstance().getASTemplatePath(),Locale.ENGLISH);
 				template.setEncoding("UTF-8");
 				HashMap<Object, Object> root = new HashMap<Object, Object>();
 				root.put("ClassName", ClassName);
@@ -278,12 +274,11 @@ public class FreeMarkerHelper {
 	}
 	private static void createExcelManager(String className, ArrayList<ErayFunctionNameBean> fieldList, String basePath) throws IOException{
 		try{
-			BuildConfig cc = new BuildConfig();
 			Configuration freemarkerCfg = FreemarkerConfiguration.getConfiguation();
 			freemarkerCfg.setDirectoryForTemplateLoading(new File("./"));
 			freemarkerCfg.setEncoding(Locale.getDefault(), "gb2312");
 			Template template;
-			template = freemarkerCfg.getTemplate(cc.getExcelSheetManagerPath(),Locale.ENGLISH);
+			template = freemarkerCfg.getTemplate(BuildConfig.getInstance().getExcelSheetManagerPath(),Locale.ENGLISH);
 			template.setEncoding("UTF-8");
 			HashMap<Object, Object> root = new HashMap<Object, Object>();
 			root.put("ClassName", className);
@@ -310,13 +305,12 @@ public class FreeMarkerHelper {
 	}
 	private static void createCADDStruct(String ClassName,ArrayList<ErayBean> fieldList,String basePath,String defaultPackageString) throws IOException{
 		try{
-			BuildConfig cc = new BuildConfig();
 			Configuration freemarkerCfg = FreemarkerConfiguration.getConfiguation();
 			freemarkerCfg.setDirectoryForTemplateLoading(new File("./"));
 			freemarkerCfg.setEncoding(Locale.getDefault(), "gb2312");
 			Template template;
 			try{
-				template = freemarkerCfg.getTemplate(cc.getCDDTemplatePath(),Locale.ENGLISH);
+				template = freemarkerCfg.getTemplate(BuildConfig.getInstance().getCDDTemplatePath(),Locale.ENGLISH);
 				template.setEncoding("UTF-8");
 				HashMap<Object, Object> root = new HashMap<Object, Object>();
 				root.put("ClassName", ClassName);
@@ -364,14 +358,13 @@ public class FreeMarkerHelper {
 	}
 	private static void createJavaVOTemplate(String ClassName,ArrayList<ErayBean> fieldList,String basePath,String defaultPackageString) throws IOException{
 		try{
-			BuildConfig cc = new BuildConfig();
 			Configuration freemarkerCfg = FreemarkerConfiguration.getConfiguation();
 			freemarkerCfg.setDirectoryForTemplateLoading(new File("./"));
 			freemarkerCfg.setEncoding(Locale.getDefault(), "gb2312");
 			Template template;
 //		
 			try{
-				template = freemarkerCfg.getTemplate(cc.getJavaTemplatePath(),Locale.ENGLISH);
+				template = freemarkerCfg.getTemplate(BuildConfig.getInstance().getJavaTemplatePath(),Locale.ENGLISH);
 				template.setEncoding("UTF-8");
 				HashMap<Object, Object> root = new HashMap<Object, Object>();
 				root.put("ClassName", ClassName);
