@@ -60,10 +60,7 @@ public class TranformExcel {
 	private String[] classNodNames = { "root", "cl" };
 	private Set<String> whiteSet = new HashSet<String>();
 	private  Set<String> whiteSetOld = new HashSet<String>();
-	private  Boolean outPutData = true;
-	private  Boolean outPutAS = false;
-	private  Boolean outPutJava = false;
-	private  Boolean outPutCDD = false;
+
 	private  Element classRoot;
 	private  Document classDoc;
 	private  ArrayList<String> allClassList = new ArrayList<String>();
@@ -80,11 +77,7 @@ public class TranformExcel {
 	 *            根路径
 	 * @throws Exception 
 	 */
-	public void tranformPath(String path, boolean line,Boolean isData,Boolean isAS, Boolean isJava,Boolean isCADD) throws Exception {
-		outPutData = isData;
-		outPutAS = isAS;
-		outPutJava = isJava;
-		outPutCDD = isCADD;
+	public void tranformPath(String path, boolean line) throws Exception {
 		root = new Element(rootNames[0]);
 		doc = new Document(root);
 
@@ -100,7 +93,7 @@ public class TranformExcel {
 			}
 		}
 
-		FreeMarkerHelper.createVOFactory(BuildConfig.getInstance().getBasePath(), allClassList, outPutCDD);
+		FreeMarkerHelper.createVOFactory(BuildConfig.getInstance().getBasePath(), allClassList, iao.outCADD);
 		/**输出数据XML节点文件**/
 		XMLOutputter xmlout = new XMLOutputter();
 		try {
@@ -269,11 +262,11 @@ public class TranformExcel {
 			FreeMarkerHelper.createExcelHelper(managerClassName,iao.isOutPutExcelHelper, data, iao.outPrePath,ovo);
 		}
 		//生成类文件
-		FreeMarkerHelper.createClassVO(className, outPutAS, outPutJava, data,BuildConfig.getInstance().getBasePath(),BuildConfig.getInstance().getPackageString(),outPutCDD);
+		FreeMarkerHelper.createClassVO(className, iao.outAS, iao.outJava, data,BuildConfig.getInstance().getBasePath(),BuildConfig.getInstance().getPackageString(),iao.outCADD);
 		Element classSubroot = new Element(this.classNodNames[1]);
 		classSubroot.setAttribute("val",BuildConfig.getInstance().getPackageString()+"."+className);
 		classRoot.addContent(classSubroot);
-		if(!outPutData){
+		if(!iao.isData){
 			return;
 		}
 		allClassList.add(className);
