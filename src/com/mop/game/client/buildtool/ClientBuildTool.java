@@ -21,7 +21,6 @@ public class ClientBuildTool {
 		}
 		TranformExcel tfe = new TranformExcel();
 		tfe.setInputArgsVO(iao);
-		tfe.setOutputFilePath(iao.outPrePath,iao.defaultPackagePath);
 		tfe.tranformPath(iao.path,iao.isTrue);
 		System.out.println("build is ok   Spend time mills:  " + (System.currentTimeMillis() - s));
 		System.out.println("Path:"+iao.outPrePath);
