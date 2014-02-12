@@ -250,7 +250,6 @@ public class TranformExcel {
 			return;
 		}
 		String tmp;
-		
 		if(iao.isOutPutExcelHelper){
 			ErayExcelManagerBean managerBean = new ErayExcelManagerBean();
 			String managerClassName = xlsName+"_"+sheetName+"Manager";
