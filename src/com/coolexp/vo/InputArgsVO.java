@@ -22,7 +22,7 @@ public class InputArgsVO {
 		boolean isData = true;
 		boolean outAS = false;
 		boolean outJava = false;
-		boolean outC = false;
+		boolean outC = true;
 		boolean outSheetsDat = false;
 		boolean outPutExcelHelper = true;
 		if (args.length < 6){

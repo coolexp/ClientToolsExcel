@@ -231,7 +231,6 @@ public class TranformExcel {
 	 * @param sheetName
 	 *            sheet的名字
 	 */
-	@SuppressWarnings("rawtypes")
 	private void tranformSheet2(String path, String sheetName,Map<String,ObjKeyVO> objKeyMap) throws Exception {
 		if ("changelog".equalsIgnoreCase(sheetName)) {
 			return;
@@ -239,7 +238,9 @@ public class TranformExcel {
 		// 获取原始数据
 		String[][] data = ExcelUtil.getSheetData(path, sheetName);
 		ObjKeyVO ovo = objKeyMap.get(sheetName);
-		
+		if(ovo==null){
+			return;
+		}
 		if (data.length == 0) {
 			return;
 		}
@@ -388,7 +389,6 @@ public class TranformExcel {
 		return map;
 	}
 	
-	@SuppressWarnings("rawtypes")
 	private void attributeVal(String attrName,String val,Map<String, String> ssubMap,String sheetName) throws Exception{
 		ssubMap.put(attrName, val);
 	}

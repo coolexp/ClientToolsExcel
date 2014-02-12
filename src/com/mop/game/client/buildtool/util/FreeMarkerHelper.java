@@ -87,12 +87,12 @@ public class FreeMarkerHelper {
 			Writer writer;
 			try{
 				String packageFolder = "helper\\";
-				File asDic = new File(outPutBasePath+"as3\\"+packageFolder);
+				File asDic = new File(outPutBasePath+"asmanager\\"+packageFolder);
 				if(!asDic.exists()){
 					asDic.mkdirs();
 				}
 				writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(outPutBasePath+"as3\\"+packageFolder+"ErayExcelDataHelper.as"), "UTF-8"));
+				new FileOutputStream(outPutBasePath+"asmanager\\"+packageFolder+"ErayExcelDataHelper.as"), "UTF-8"));
 				template.process(root, writer);
 				writer.flush();
 				writer.close();
@@ -118,12 +118,12 @@ public class FreeMarkerHelper {
 			Writer writer;
 			try{
 				String packageFolder = "helper\\";
-				File asDic = new File(outPutBasePath+"as3\\"+packageFolder);
+				File asDic = new File(outPutBasePath+"asmanager\\"+packageFolder);
 				if(!asDic.exists()){
 					asDic.mkdirs();
 				}
 				writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(outPutBasePath+"as3\\"+packageFolder+"DotaSheetsNameData.as"), "UTF-8"));
+				new FileOutputStream(outPutBasePath+"asmanager\\"+packageFolder+"DotaSheetsNameData.as"), "UTF-8"));
 				template.process(root, writer);
 				writer.flush();
 				writer.close();
@@ -222,16 +222,18 @@ public class FreeMarkerHelper {
 			if(isAS){
 				createASVOTemplate(ClassName,fieldList,outPutBasePath,defaultPackageString);
 			}else{
-				//System.out.println("不需生成AS类文件");
-				createASVOTemplate(ClassName,fieldList,outPutBasePath,defaultPackageString);
+				System.out.println("不需生成AS类文件"+ClassName);
+//				createASVOTemplate(ClassName,fieldList,outPutBasePath,defaultPackageString);
 			}
 			if(isJava){
 				createJavaVOTemplate(ClassName,fieldList,outPutBasePath,defaultPackageString);
 			}else{
-				//System.out.println("不需生成Java类文件");
+				System.out.println("不需生成Java类文件"+ClassName);
 			}
 			if(isCADD){
 				createCADDStruct(ClassName,fieldList,outPutBasePath,defaultPackageString);
+			}else{
+				System.out.println("不需生成C++类文件"+ClassName);
 			}
 		}else{
 			//System.out.println("不需生成Java和AS类文件");
@@ -289,12 +291,12 @@ public class FreeMarkerHelper {
 			Writer writer;
 			try{
 				String packageFolder = "managers\\";
-				File asDic = new File(basePath+"as3\\"+packageFolder);
+				File asDic = new File(basePath+"asmanager\\"+packageFolder);
 				if(!asDic.exists()){
 					asDic.mkdirs();
 				}
 				writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(basePath+"as3\\"+packageFolder+className+".as"), "UTF-8"));
+				new FileOutputStream(basePath+"asmanager\\"+packageFolder+className+".as"), "UTF-8"));
 				template.process(root, writer);
 				writer.flush();
 				writer.close();
