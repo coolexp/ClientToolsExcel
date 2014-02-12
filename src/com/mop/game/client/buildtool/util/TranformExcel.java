@@ -268,9 +268,7 @@ public class TranformExcel {
 			return;
 		}
 		String tmp;
-		Class iv = null;
-
-		iv = null;
+		
 		if(iao.isOutPutExcelHelper){
 			ErayExcelManagerBean managerBean = new ErayExcelManagerBean();
 			String managerClassName = xlsName+"_"+sheetName+"Manager";
@@ -294,11 +292,8 @@ public class TranformExcel {
 			Element ssubroot = new Element(rootNames[1]);
 			ssubroot.setAttribute("id", data[i][0]);
 			//ssubMap.put("id", data[i][0]);
-			Object oInstance = null;
-			if(iv!=null){
-				oInstance = iv.newInstance();
-			}
-			attributeVal("id",data[i][0],oInstance,ssubMap,iv,className);
+			
+			attributeVal("id",data[i][0],ssubMap,className);
 			if (!whiteSetOld.contains("id")) {
 				whiteSet.add("id");
 			}
@@ -312,24 +307,24 @@ public class TranformExcel {
 					if (data[4][j].equals("1")) {
 						ssubroot.setAttribute(data[0][j].trim(), getKey(path,sheetName, data[i][0], data[0][j]));
 						//ssubMap.put(data[0][j].trim(), getKey(path,sheetName, data[i][0], data[0][j].trim()));
-						attributeVal(data[0][j].trim(),getKey(path,sheetName, data[i][0], data[0][j].trim()),oInstance,ssubMap,iv,className);
+						attributeVal(data[0][j].trim(),getKey(path,sheetName, data[i][0], data[0][j].trim()),ssubMap,className);
 					} else {
 						// 数据类型
 						tmp = (data[1][j]).toLowerCase();
 						if (tmp.indexOf("string") != -1) {
 							ssubroot.setAttribute(data[0][j].trim(), data[i][j]);
 							//ssubMap.put(data[0][j].trim(), data[i][j]);
-							attributeVal(data[0][j].trim(),data[i][j],oInstance,ssubMap,iv,className);
+							attributeVal(data[0][j].trim(),data[i][j],ssubMap,className);
 						} else {
 							if (data[i][j] == null || "".equals(data[i][j].trim())) {
 								ssubroot.setAttribute(data[0][j].trim(), String.valueOf(DEFAULT));
 //								ssubMap.put(data[0][j].trim(), String.valueOf(DEFAULT));
-								attributeVal(data[0][j].trim(),String.valueOf(DEFAULT),oInstance,ssubMap,iv,className);
+								attributeVal(data[0][j].trim(),String.valueOf(DEFAULT),ssubMap,className);
 								continue;
 							} else {
 								ssubroot.setAttribute(data[0][j].trim(), data[i][j]);
 //								ssubMap.put(data[0][j].trim(), data[i][j]);
-								attributeVal(data[0][j].trim(),data[i][j],oInstance,ssubMap,iv,className);
+								attributeVal(data[0][j].trim(),data[i][j],ssubMap,className);
 							}
 						}
 					}
@@ -337,11 +332,8 @@ public class TranformExcel {
 			}
 			String objKey = getObjKey(ovo,data,i);
 			subroot.addContent(ssubroot);
-			if(iv!=null&&oInstance!=null){
-				subMap.put(objKey, oInstance);
-			}else{
-				subMap.put(objKey, ssubMap);
-			}
+			subMap.put(objKey, ssubMap);
+			//设置ID为键值
 //			subMap.put(data[i][0], ssubMap);
 		}
 		
@@ -397,39 +389,8 @@ public class TranformExcel {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private void attributeVal(String attrName,String val,Object o,Map<String, String> ssubMap,Class iv,String sheetName) throws Exception{
-		if(o!=null){
-			Field f = iv.getField(attrName);
-			f.setAccessible(true);
-			String typeStr = f.getType().toString();
-			if(typeStr.equals("int")){
-				int v = 0;
-				if(!val.equals("")){
-					try{
-						v = Integer.parseInt(val);
-					}catch(Exception e){
-						System.out.println("页名："+sheetName+" "+attrName+val+"Int 出现异常");
-						v = 0;
-					}
-				}
-				f.set(o, v);
-			}else if(typeStr.equals("long")){
-				long t = 0;
-				if(!val.equals("")){
-					try{
-						t = Long.parseLong(val);
-					}catch(Exception e){
-						System.out.println("页名："+sheetName+" "+attrName+val+"Long出现异常");
-						t = 0;
-					}
-				}
-				f.set(o, t);
-			}else{
-				f.set(o, val);
-			}
-		}else{
-			ssubMap.put(attrName, val);
-		}
+	private void attributeVal(String attrName,String val,Map<String, String> ssubMap,String sheetName) throws Exception{
+		ssubMap.put(attrName, val);
 	}
 	
 	private String getObjKey(ObjKeyVO ovo,String[][] data ,int i){

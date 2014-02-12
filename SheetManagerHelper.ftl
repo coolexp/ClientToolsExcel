@@ -1,14 +1,15 @@
 package com.eray.base.utils.excel
 {
 	import com.eray.base.debug.Console;
-	import com.eray.base.utils.excel.managers.Activity_ActivityMainManager;
 	import com.eray.base.utils.excel.managers.DotaSheetsNameData;
 	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-	
+<#list FieldList as field>
+	import com.eray.base.utils.excel.managers.${field.claString};
+</#list>
 	public class ErayExcelDataHelper extends EventDispatcher
 	{
 		private static var _instance:ErayExcelDataHelper;
@@ -90,7 +91,7 @@ package com.eray.base.utils.excel
 			}
 			return obj;
 		}
-		<#list FieldList as field>	
+<#list FieldList as field>	
 		public function get${field.claString}():${field.claString}{
 			var ${field.claString} = null;
 			do{
@@ -102,7 +103,7 @@ package com.eray.base.utils.excel
 			}while(0);
 			return manager;
 		}
-		</#list>
+</#list>
 		
 	}
 }
