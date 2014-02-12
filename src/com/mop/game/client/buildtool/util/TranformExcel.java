@@ -69,6 +69,8 @@ public class TranformExcel {
 	private InputArgsVO iao;
 	public void setInputArgsVO(InputArgsVO _iao){
 		iao = _iao;
+		BuildConfig.disposeInstance();
+		BuildConfig.getInstance().initOutPutInfo(iao.outPrePath,iao.defaultPackagePath);
 	}
 	/**
 	 * 转换一个根路径下所有的xls文件
@@ -115,10 +117,7 @@ public class TranformExcel {
 		}
 		createData(BuildConfig.getInstance().getOutputDatafile(),mainMap);
 	}
-	public void setOutputFilePath(String path,String defaultPackageStr){
-		BuildConfig.disposeInstance();
-		BuildConfig.getInstance().initOutPutInfo(path,defaultPackageStr);
-	}
+	
 	private static void createData(String path,Map<String, Object> subMap) throws IOException{
 		
 		SerializationContext serializationContext = new SerializationContext();
