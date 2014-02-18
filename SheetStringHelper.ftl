@@ -6,8 +6,8 @@ package com.eray.base.utils.excel.managers
 		{
 		}
 		
-		<#list FieldList as field>	
+<#list FieldList as field>	
 		public static const ${field.uuString}:String = "${field.staticString}";
-		</#list>
+</#list>
 	}
 }
