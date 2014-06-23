@@ -14,6 +14,14 @@ public class ClientBuildTool {
 	 */
 	public static void main(String[] args) throws Exception{
 		InputArgsVO iao = InputArgsVO.parse(args);
+		File xmlDic = new File(iao.outPrePath+"xml\\");
+		if(!xmlDic.exists()){
+			xmlDic.mkdirs();
+		}
+		File datDic = new File(iao.outPrePath+"dat\\");
+		if(!datDic.exists()){
+			datDic.mkdirs();
+		}
 		long s = System.currentTimeMillis();
 		File fil = new File("export");
 		if (fil.exists()){

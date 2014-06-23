@@ -268,10 +268,13 @@ public class TranformExcel {
 			return;
 		}
 		allClassList.add(className);
+		Element sheetRoot = new Element(className);
 		for (int i = 5; i < data.length; i++) {
 			Map<String, String> ssubMap = new HashMap<String, String>();
 			Element ssubroot = new Element(rootNames[1]);
+			Element singleSheetEle = new Element(rootNames[1]);
 			ssubroot.setAttribute("id", data[i][0]);
+			singleSheetEle.setAttribute("id", data[i][0]);
 			//ssubMap.put("id", data[i][0]);
 			
 			attributeVal("id",data[i][0],ssubMap,className);
@@ -287,6 +290,7 @@ public class TranformExcel {
 					// 需要国际化 生成key
 					if (data[4][j].equals("1")) {
 						ssubroot.setAttribute(data[0][j].trim(), getKey(path,sheetName, data[i][0], data[0][j]));
+						singleSheetEle.setAttribute(data[0][j].trim(), getKey(path,sheetName, data[i][0], data[0][j]));
 						//ssubMap.put(data[0][j].trim(), getKey(path,sheetName, data[i][0], data[0][j].trim()));
 						attributeVal(data[0][j].trim(),getKey(path,sheetName, data[i][0], data[0][j].trim()),ssubMap,className);
 					} else {
@@ -294,16 +298,19 @@ public class TranformExcel {
 						tmp = (data[1][j]).toLowerCase();
 						if (tmp.indexOf("string") != -1) {
 							ssubroot.setAttribute(data[0][j].trim(), data[i][j]);
+							singleSheetEle.setAttribute(data[0][j].trim(), data[i][j]);
 							//ssubMap.put(data[0][j].trim(), data[i][j]);
 							attributeVal(data[0][j].trim(),data[i][j],ssubMap,className);
 						} else {
 							if (data[i][j] == null || "".equals(data[i][j].trim())) {
 								ssubroot.setAttribute(data[0][j].trim(), String.valueOf(DEFAULT));
+								singleSheetEle.setAttribute(data[0][j].trim(), String.valueOf(DEFAULT));
 //								ssubMap.put(data[0][j].trim(), String.valueOf(DEFAULT));
 								attributeVal(data[0][j].trim(),String.valueOf(DEFAULT),ssubMap,className);
 								continue;
 							} else {
 								ssubroot.setAttribute(data[0][j].trim(), data[i][j]);
+								singleSheetEle.setAttribute(data[0][j].trim(), data[i][j]);
 //								ssubMap.put(data[0][j].trim(), data[i][j]);
 								attributeVal(data[0][j].trim(),data[i][j],ssubMap,className);
 							}
@@ -313,6 +320,7 @@ public class TranformExcel {
 			}
 			String objKey = getObjKey(ovo,data,i);
 			subroot.addContent(ssubroot);
+			sheetRoot.addContent(singleSheetEle);
 			subMap.put(objKey, ssubMap);
 			//设置ID为键值
 //			subMap.put(data[i][0], ssubMap);
@@ -322,12 +330,14 @@ public class TranformExcel {
 		mainMap.put(className+"_field", fieldMap);
 		root.addContent(subroot);
 		mainMap.put(className, subMap);
+		FileUtil.createItemXML(sheetRoot,iao.outPrePath+"xml\\"+className);
 		if(iao.isOutPutSheetsDat){
 			Map<String, Object> mMap = new HashMap<String, Object>();
 			mMap.put(className, subMap);
-			createData(BuildConfig.getInstance().getBasePath()+className+".dat",mMap);
+			createData(BuildConfig.getInstance().getBasePath()+"dat\\"+className+".dat",mMap);
 		}
 	}
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private Map<String,List<Object>> getGroupToList(Map<String, Object> subMap,ObjKeyVO ovo) throws Exception{
 		Map<String,List<Object>> map = new HashMap<String,List<Object>>();

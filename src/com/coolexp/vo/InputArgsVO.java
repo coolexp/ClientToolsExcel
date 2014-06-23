@@ -23,7 +23,7 @@ public class InputArgsVO {
 		boolean outAS = false;
 		boolean outJava = false;
 		boolean outC = true;
-		boolean outSheetsDat = false;
+		boolean outSheetsDat = true;
 		boolean outPutExcelHelper = true;
 		if (args.length < 6){
 			System.out.println("参数不足,正在查找默认路径D:\\data");

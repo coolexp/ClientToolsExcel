@@ -3,9 +3,14 @@ package com.mop.game.client.buildtool.util;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 /**
  * 标题: 文件操作工具.<br>
@@ -73,6 +78,18 @@ public class FileUtil {
 		File file = new File(path);
 		if (!file.exists()) {
 			file.mkdirs();
+		}
+	}
+	
+	public static void createItemXML(Element sheetElement,String sheetName){
+		Document sheetDoc = new Document(sheetElement);
+		XMLOutputter xmlout = new XMLOutputter();
+		try {
+			xmlout.output(sheetDoc, new FileOutputStream(sheetName+".xml"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
