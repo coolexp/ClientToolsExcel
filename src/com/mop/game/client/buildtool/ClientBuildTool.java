@@ -14,14 +14,6 @@ public class ClientBuildTool {
 	 */
 	public static void main(String[] args) throws Exception{
 		InputArgsVO iao = InputArgsVO.parse(args);
-		File xmlDic = new File(iao.outPrePath+"xml\\");
-		if(!xmlDic.exists()){
-			xmlDic.mkdirs();
-		}
-		File datDic = new File(iao.outPrePath+"dat\\");
-		if(!datDic.exists()){
-			datDic.mkdirs();
-		}
 		long s = System.currentTimeMillis();
 		File fil = new File("export");
 		if (fil.exists()){
@@ -32,8 +24,8 @@ public class ClientBuildTool {
 		tfe.tranformPath(iao.path,iao.isTrue);
 		System.out.println("build is ok   Spend time mills:  " + (System.currentTimeMillis() - s));
 		System.out.println("Path:"+iao.outPrePath);
+		System.out.println("PackExcelSuccess");
 		System.exit(0);
-		
 	}
 
 }

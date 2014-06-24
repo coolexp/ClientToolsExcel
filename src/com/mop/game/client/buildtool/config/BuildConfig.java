@@ -1,5 +1,6 @@
 package com.mop.game.client.buildtool.config;
 
+import com.coolexp.vo.InputArgsVO;
 import com.mop.game.client.buildtool.util.OtherUtils;
 
 public class BuildConfig {
@@ -30,13 +31,13 @@ public class BuildConfig {
 		return defaultPackageString;
 	}
 	
-	
-	public void initOutPutInfo(String path,String packString){
-		outputfile = path + outputfile;
-		outputDatafile = path + outputDatafile;
-		outputDatafileAmf = path + outputDatafileAmf;
-		outputXMLFile = path + outputXMLFile;
-		defaultPackageString = packString;
+	public void initOutPutInfo(InputArgsVO iao){
+		String path = iao.outPrePath;
+		outputfile = iao.outXMLPath+"\\"+ outputfile;
+		outputDatafile = iao.outDatPath+"\\" + outputDatafile;
+		outputDatafileAmf = iao.outDatPath+"\\" + outputDatafileAmf;
+		outputXMLFile = iao.outXMLPath+"\\" + outputXMLFile;
+		defaultPackageString = iao.defaultPackagePath;
 		basePath = path;
 	}
 	public String getOutPutFile(){

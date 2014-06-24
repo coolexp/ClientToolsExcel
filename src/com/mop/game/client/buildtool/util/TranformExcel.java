@@ -70,7 +70,7 @@ public class TranformExcel {
 	public void setInputArgsVO(InputArgsVO _iao){
 		iao = _iao;
 		BuildConfig.disposeInstance();
-		BuildConfig.getInstance().initOutPutInfo(iao.outPrePath,iao.defaultPackagePath);
+		BuildConfig.getInstance().initOutPutInfo(iao);
 	}
 	/**
 	 * 转换一个根路径下所有的xls文件
@@ -82,10 +82,8 @@ public class TranformExcel {
 	public void tranformPath(String path, boolean line) throws Exception {
 		root = new Element(rootNames[0]);
 		doc = new Document(root);
-
 		classRoot = new Element(classNodNames[0]);
 		classDoc = new Document(classRoot);
-		
 		List<String> list = getAllFiles(path);
 		
 		for (String s : list) {
@@ -330,11 +328,13 @@ public class TranformExcel {
 		mainMap.put(className+"_field", fieldMap);
 		root.addContent(subroot);
 		mainMap.put(className, subMap);
-		FileUtil.createItemXML(sheetRoot,iao.outPrePath+"xml\\"+className);
+		if(iao.isOutSheetsXML){
+			FileUtil.createItemXML(sheetRoot,iao.outXMLPath+"\\"+className);
+		}
 		if(iao.isOutPutSheetsDat){
 			Map<String, Object> mMap = new HashMap<String, Object>();
 			mMap.put(className, subMap);
-			createData(BuildConfig.getInstance().getBasePath()+"dat\\"+className+".dat",mMap);
+			createData(iao.outDatPath+"\\"+className+".dat",mMap);
 		}
 	}
 	
