@@ -15,7 +15,7 @@ public class BuildConfig {
 	public String templateExcelHelperStrPath = "SheetStringHelper.ftl";
 	
 	private String outputfile = "ErayClientData.xml";
-	private String outputDatafile = "ErayClientData.dat";
+	private String outputDatafile = "com.yiru.ClientData.dat";
 	private String outputDatafileAmf = "ErayClientData.amf";
 	private String outputXMLFile = "ErayClassObj.xml";
 	

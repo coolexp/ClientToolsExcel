@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 /**
@@ -83,7 +84,10 @@ public class FileUtil {
 	
 	public static void createItemXML(Element sheetElement,String sheetName){
 		Document sheetDoc = new Document(sheetElement);
-		XMLOutputter xmlout = new XMLOutputter();
+		Format format = Format.getCompactFormat(); 
+		format.setIndent("    ");
+		format.setLineSeparator("\n");
+		XMLOutputter xmlout = new XMLOutputter(format);
 		try {
 			xmlout.output(sheetDoc, new FileOutputStream(sheetName+".xml"));
 		} catch (FileNotFoundException e) {

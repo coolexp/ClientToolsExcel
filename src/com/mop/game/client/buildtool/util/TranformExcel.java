@@ -28,6 +28,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import com.coolexp.vo.ErayExcelManagerBean;
@@ -95,7 +96,10 @@ public class TranformExcel {
 
 		FreeMarkerHelper.createVOFactory(BuildConfig.getInstance().getBasePath(), allClassList, iao.outCADD);
 		/**输出数据XML节点文件**/
-		XMLOutputter xmlout = new XMLOutputter();
+		Format format = Format.getCompactFormat(); 
+		format.setIndent("    ");
+		format.setLineSeparator("\n");
+		XMLOutputter xmlout = new XMLOutputter(format);
 		try {
 			xmlout.output(doc, new FileOutputStream(BuildConfig.getInstance().getOutPutFile()));
 		} catch (FileNotFoundException e) {
@@ -105,7 +109,8 @@ public class TranformExcel {
 		}
 		
 		/**输出ClassXML节点文件**/
-		XMLOutputter classXMLout = new XMLOutputter();
+	
+		XMLOutputter classXMLout = new XMLOutputter(format);
 		try{
 			classXMLout.output(classDoc, new FileOutputStream(BuildConfig.getInstance().getOutputXMLFile()));
 		}catch(FileNotFoundException e){

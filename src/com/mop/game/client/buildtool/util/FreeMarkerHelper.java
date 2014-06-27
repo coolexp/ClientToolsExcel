@@ -195,8 +195,12 @@ public class FreeMarkerHelper {
 		if(isAS||isJava||isCADD){
 			ArrayList<ErayBean> fieldList = new ArrayList<ErayBean>();
 			String [] d = data[0];
+			String [] dd = data[3];
 			for(int k=0;k<d.length;k++){
 				if(d[k].equals("")){
+					continue;
+				}
+				if(dd[k].equals("2")){
 					continue;
 				}
 				ErayBean b = new ErayBean();
