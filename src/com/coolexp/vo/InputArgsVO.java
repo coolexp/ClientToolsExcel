@@ -16,6 +16,7 @@ public class InputArgsVO {
 	public String outXMLPath;
 	public String outDatPath;
 	public boolean isOutSheetsXML;
+	public boolean isRelease;
 	public static InputArgsVO parse(String[]  args){
 		InputArgsVO iao = new InputArgsVO();
 		String path ="";
@@ -32,8 +33,9 @@ public class InputArgsVO {
 		boolean outPutExcelHelper = false;
 		boolean outSheetsXML = true;
 		boolean usePreBasePath = false;
+		boolean isRelease = false;
 		String preBasePath ="";
-		if (args.length != 14){
+		if (args.length != 15){
 			System.out.println("参数不足,正在查找默认路径D:\\data");
 			File file = new File("D:\\data");
 			if(!file.exists()){
@@ -68,9 +70,10 @@ public class InputArgsVO {
 			outSheetsDat = args[8].equals("1") ? true : false;
 			outSheetsXML = args[9].equals("1") ? true : false;
 			usePreBasePath = args[10].equals("1") ? true : false;
-			preBasePath = args[11];
-			outXMLPath = args[12];
-			outTotalDatPath = args[13];
+			isRelease = args[11].equals("1") ? true : false;
+			preBasePath = args[12];
+			outXMLPath = args[13];
+			outTotalDatPath = args[14];
 		}
 		if(isData==false&&outAS==false&&outJava==false&&outC==false&&outPutExcelHelper==false){
 			System.out.println("您输入的参数不需要做任何打包工作");
@@ -94,6 +97,7 @@ public class InputArgsVO {
 			iao.outDatPath = preBasePath+outTotalDatPath;
 			iao.outXMLPath = preBasePath+outXMLPath;
 		}
+		iao.isRelease = isRelease;
 		return iao;
 	}
 }

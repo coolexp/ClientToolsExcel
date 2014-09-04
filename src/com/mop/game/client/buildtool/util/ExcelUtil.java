@@ -47,24 +47,26 @@ public class ExcelUtil {
 		}
 		for(int j=5;j<rowNum;j++) {
 			HSSFRow row = childSheet.getRow(j);
-			ObjKeyVO ovo = new ObjKeyVO();
-			for(int k=1;k<cellNum;k++){
-				HSSFCell cell = row.getCell(k);
-				switch(k){
-				case 1:
-					ovo.sheetName = getCellData(cell);
-					break;
-				case 2:
-					ovo.keyStr = getCellData(cell);
-					break;
-				case 4:
-					ovo.searchAttr = getCellData(cell);
-				case 5:
-					ovo.methodStr = getCellData(cell);
-					break;
+			if(row!=null){
+				ObjKeyVO ovo = new ObjKeyVO();
+				for(int k=1;k<cellNum;k++){
+					HSSFCell cell = row.getCell(k);
+					switch(k){
+					case 1:
+						ovo.sheetName = getCellData(cell);
+						break;
+					case 2:
+						ovo.keyStr = getCellData(cell);
+						break;
+					case 4:
+						ovo.searchAttr = getCellData(cell);
+					case 5:
+						ovo.methodStr = getCellData(cell);
+						break;
+					}
 				}
-			}
 			map.put(ovo.sheetName, ovo);
+			}
 		}
 		return map;
 	}

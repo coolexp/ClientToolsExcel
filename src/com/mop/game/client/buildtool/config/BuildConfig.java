@@ -15,7 +15,7 @@ public class BuildConfig {
 	public String templateExcelHelperStrPath = "SheetStringHelper.ftl";
 	
 	private String outputfile = "ErayClientData.xml";
-	private String outputDatafile = "com.yiru.ClientData.dat";
+	private String outputDatafile = "com.yiru.ClientData.da";
 	private String outputDatafileAmf = "ErayClientData.amf";
 	private String outputXMLFile = "ErayClassObj.xml";
 	
@@ -35,6 +35,9 @@ public class BuildConfig {
 		String path = iao.outPrePath;
 		outputfile = iao.outXMLPath+"\\"+ outputfile;
 		outputDatafile = iao.outDatPath+"\\" + outputDatafile;
+		if(iao.isRelease){
+			outputDatafile+=".dat";
+		}
 		outputDatafileAmf = iao.outDatPath+"\\" + outputDatafileAmf;
 		outputXMLFile = iao.outXMLPath+"\\" + outputXMLFile;
 		defaultPackageString = iao.defaultPackagePath;

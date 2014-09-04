@@ -286,6 +286,10 @@ public class TranformExcel {
 			}
 			for (int j = 1; j < assistColumn.length; j++) {
 				// 数据有效
+				String attrName = data[0][j].trim();
+				if(!attrName.equals("")){
+					singleSheetEle.setAttribute(data[0][j].trim(), data[i][j]);
+				}
 				if (assistColumn[j].equals("1") || assistColumn[j].equals("3")) {
 					if (!whiteSetOld.contains(data[0][j].trim())) {
 						whiteSet.add(data[0][j].trim());
@@ -293,7 +297,7 @@ public class TranformExcel {
 					// 需要国际化 生成key
 					if (data[4][j].equals("1")) {
 						ssubroot.setAttribute(data[0][j].trim(), getKey(path,sheetName, data[i][0], data[0][j]));
-						singleSheetEle.setAttribute(data[0][j].trim(), getKey(path,sheetName, data[i][0], data[0][j]));
+//						singleSheetEle.setAttribute(data[0][j].trim(), getKey(path,sheetName, data[i][0], data[0][j]));
 						//ssubMap.put(data[0][j].trim(), getKey(path,sheetName, data[i][0], data[0][j].trim()));
 						attributeVal(data[0][j].trim(),getKey(path,sheetName, data[i][0], data[0][j].trim()),ssubMap,className);
 					} else {
@@ -301,19 +305,19 @@ public class TranformExcel {
 						tmp = (data[1][j]).toLowerCase();
 						if (tmp.indexOf("string") != -1) {
 							ssubroot.setAttribute(data[0][j].trim(), data[i][j]);
-							singleSheetEle.setAttribute(data[0][j].trim(), data[i][j]);
+//							singleSheetEle.setAttribute(data[0][j].trim(), data[i][j]);
 							//ssubMap.put(data[0][j].trim(), data[i][j]);
 							attributeVal(data[0][j].trim(),data[i][j],ssubMap,className);
 						} else {
 							if (data[i][j] == null || "".equals(data[i][j].trim())) {
 								ssubroot.setAttribute(data[0][j].trim(), String.valueOf(DEFAULT));
-								singleSheetEle.setAttribute(data[0][j].trim(), String.valueOf(DEFAULT));
+//								singleSheetEle.setAttribute(data[0][j].trim(), String.valueOf(DEFAULT));
 //								ssubMap.put(data[0][j].trim(), String.valueOf(DEFAULT));
 								attributeVal(data[0][j].trim(),String.valueOf(DEFAULT),ssubMap,className);
 								continue;
 							} else {
 								ssubroot.setAttribute(data[0][j].trim(), data[i][j]);
-								singleSheetEle.setAttribute(data[0][j].trim(), data[i][j]);
+//								singleSheetEle.setAttribute(data[0][j].trim(), data[i][j]);
 //								ssubMap.put(data[0][j].trim(), data[i][j]);
 								attributeVal(data[0][j].trim(),data[i][j],ssubMap,className);
 							}
